@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template_string
 from flask_sqlalchemy import SQLAlchemy
 from flask_user import login_required, UserManager, UserMixin
-
+from flask_user.db_adapters import SQLDbAdapter
 
 # Use a Class-based config to avoid needing a 2nd file
 # os.getenv() enables configuration through OS environment variables
@@ -75,7 +75,7 @@ def create_app():
     db.create_all()
 
     # Setup Flask-User
-    db_adapter = SQLAlchemyAdapter(db, User, UserEmailClass=UserEmail)        # Register the User data-model
+    db_adapter = SQLDbAdapter(db, User, UserEmailClass=UserEmail)        # Register the User data-model
     user_manager = UserManager(db_adapter, app)     # Initialize Flask-User
 
     # The Home page is accessible to anyone
